@@ -11,4 +11,4 @@ require "free_group_ex_bham"
 # Pry.start
 
 require "irb"
-IRB.start(__FILE__)
+IRB.start
