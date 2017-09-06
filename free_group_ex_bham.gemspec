@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.description   = "Provides a list and details about upcoming free exercise classes in the Birmingham area."
   spec.homepage      = "TODO: Put your gem's website or public repo URL here."
   spec.license       = "MIT"
-  spec.files         = ["lib/free_group_ex_bham/cli.rb", "config/environment.rb"]
+  spec.files         = ["lib/free_group_ex_bham/cli.rb", "lib/free_group_ex_bham/offerings.rb" "config/environment.rb"]
   spec.executables << 'free-group-ex-bham'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

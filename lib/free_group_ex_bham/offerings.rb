@@ -3,6 +3,7 @@ class FreeGroupExBham::Offerings
 
   def self.month
     choice_1 = self.new
+    choices = []
     choice_1.name = "Zumba"
     choice_1.location = "Railroad Park"
     choice_1.date = "September 06, 2017"
