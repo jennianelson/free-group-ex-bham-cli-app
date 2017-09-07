@@ -13,8 +13,9 @@ class FreeGroupExBham::CLI
   end
 
   def list_classes
+    FreeGroupExBham::Scraper.new.create_classes
     puts "Here is a list of classes offered. Type the number of the class to read more information. Type 'exit' to exit.\n\n"
-    FreeGroupExBham::Scraper.post_offerings
+    FreeGroupExBham::Offerings.post_offerings
   end
 
   def menu

@@ -1,13 +1,20 @@
 class FreeGroupExBham::Offerings
-  # attr_accessor :name, :location, :date, :time, :details
+  attr_accessor :klass
 
-  # def initialize
-  #
-  # end
+  @@all = []
+
+  def initialize(c)
+    @klass = c
+    @@all << self
+  end
+
+  def self.all
+    @@all
+  end
 
   def self.post_offerings
-    Scraper.make_rrpark_classes.each_with_index do |c|
-      puts "#{i}. #{c}"
+    @@all.each_with_index do |c, i|
+      puts "#{i+1}. #{c.klass}"
     end
   end
 
