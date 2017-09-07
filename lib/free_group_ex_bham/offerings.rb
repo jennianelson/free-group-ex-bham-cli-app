@@ -1,13 +1,14 @@
 class FreeGroupExBham::Offerings
-  attr_accessor :name, :location, :date, :time, :details
+  # attr_accessor :name, :location, :date, :time, :details
 
-  def self.month
-    choice_1 = self.new
-    choices = []
-    choice_1.name = "Zumba"
-    choice_1.location = "Railroad Park"
-    choice_1.date = "September 06, 2017"
-    choice_1.time = "6:00pm"
+  # def initialize
+  #
+  # end
+
+  def self.post_offerings
+    Scraper.make_rrpark_classes.each_with_index do |c|
+      puts "#{i}. #{c}"
+    end
   end
 
 end
