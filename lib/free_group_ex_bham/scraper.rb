@@ -32,14 +32,15 @@ class FreeGroupExBham::Scraper
     end.compact[0..3]
   end
 
-  def scrape_gardens
+  def scrape_gardens_url
     doc = Nokogiri::HTML(open("http://aldridgegardens.com/education/events/spring_event_calendar.html"))
-    doc.css("td.currentMonth").text.split("\n").collect do |t|
-      if t.include?("Yoga") || t.include?("Tai")
-        t.strip
+    binding.pry
+    doc.css("td.currentMonth a").collect do |a|
+      url = a.attr('href')
+      if url.include?("tai") || url.include?("yoga")
+        url
       end
-    end.compact.uniq
-
+    end.compact
   end
 
   def combine_lists
