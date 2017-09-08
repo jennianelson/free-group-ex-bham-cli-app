@@ -1,3 +1,3 @@
-class FreeGroupExBham::RRParkClass < FreeGroupExBham::Classes
+class FreeGroupExBham::RRPark < FreeGroupExBham::Classes
 
 end

@@ -55,14 +55,14 @@ class FreeGroupExBham::Scraper
   # end
 
   def create_classes
-    gardens_class_array.each do |c|
-      FreeGroupExBham::Gardens.new(c)
+    gardens_class_array.each do |g|
+      FreeGroupExBham::Gardens.new(g)
     end
-    library_class_array.each do |c|
-      FreeGroupExBham::Library.new(c)
+    library_class_array.each do |l|
+      FreeGroupExBham::Library.new(l)
     end
-    rrpark_class_array.each do |c|
-      FreeGroupExBham::RRPark.new(c)
+    rrpark_class_array.each do |r|
+      FreeGroupExBham::RRPark.new(r)
     end
   end
 

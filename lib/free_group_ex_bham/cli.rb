@@ -2,8 +2,8 @@ class FreeGroupExBham::CLI
 
   def call
     welcome
-    list_classes
-    # menu
+    list_locations
+    menu
   end
 
   def welcome
@@ -12,20 +12,24 @@ class FreeGroupExBham::CLI
     puts "If you aren't ready to commit to a gym membership or weekly classes, there are many opportunities to take a class for FREE in the Birmingham area!\n\n"
   end
 
-  def list_classes
+  def list_locations
     FreeGroupExBham::Scraper.new.create_classes
-    puts "Here is a list of classes offered. Type the number of the class to read more information. Type 'exit' to exit.\n\n"
-    FreeGroupExBham::Offerings.post_offerings
+    puts "These three locations offer free classes. Type the number of the location to see a list of the classes offered this week. Type 'exit' to exit.\n\n"
+    puts "1. Railroad Park"
+    puts "2. Aldridge Gardens"
+    puts "3. Vestavia Hills Public Library"
   end
 
   def menu
       input = gets.strip.downcase
-      if
-        puts "Details about Zumba"
+      if input == "1"
+        FreeGroupExBham::RRPark.post_offerings
       elsif input == "2"
-        puts "Details about Yoga"
-      elsif input == "exit"
-        puts "Goodbye!"
+        FreeGroupExBham::Gardens.post_offerings
+      elsif input == "3"
+        FreeGroupExBham::Library.post_offerings
+      elsif "exit"
+        exit
       else
         puts "I'm sorry, I don't understand. Please type the number of a class on the list."
       end
