@@ -29,12 +29,11 @@ class FreeGroupExBham::Scraper
       if t.include?("Tai")
         t.gsub(";", "")
       end
-    end.compact[0..3]
+    end.compact[0..1]
   end
 
   def scrape_gardens_url
     doc = Nokogiri::HTML(open("http://aldridgegardens.com/education/events/spring_event_calendar.html"))
-    binding.pry
     doc.css("td.currentMonth a").collect do |a|
       url = a.attr('href')
       if url.include?("tai") || url.include?("yoga")
@@ -43,8 +42,16 @@ class FreeGroupExBham::Scraper
     end.compact
   end
 
+  def make_gardens_classes
+    scrape_gardens_url.collect do |u|
+      doc = Nokogiri::HTML(open(u))
+      c = doc.css("#event_details").children
+      "#{c.css('.event_title').text.strip}: #{c.css('.event_time em').text.strip}"
+    end[0..3]
+  end
+
   def combine_lists
-    make_rrpark_classes + make_library_classes + scrape_gardens
+    make_rrpark_classes + make_library_classes + make_gardens_classes
   end
 
   def create_classes
