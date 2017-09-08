@@ -4,4 +4,7 @@ require 'open-uri'
 
 require_relative '../lib/free_group_ex_bham/cli'
 require_relative '../lib/free_group_ex_bham/scraper'
-require_relative '../lib/free_group_ex_bham/offerings'
+require_relative '../lib/free_group_ex_bham/classes'
+require_relative '../lib/free_group_ex_bham/library'
+require_relative '../lib/free_group_ex_bham/rrpark'
+require_relative '../lib/free_group_ex_bham/gardens'

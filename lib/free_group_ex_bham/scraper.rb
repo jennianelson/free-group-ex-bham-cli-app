@@ -9,7 +9,7 @@ class FreeGroupExBham::Scraper
     # details = doc.css(".details").children[0..5].collect {|t| t.text}
   end
 
-  def make_rrpark_classes
+  def rrpark_class_array
     scrape_rrpark.collect do |e|
       if e.css(".details").text.include?("class")
         "#{e.css('.title').text.strip}: #{e.css('.date').text.strip}"
@@ -24,7 +24,7 @@ class FreeGroupExBham::Scraper
     end
   end
 
-  def make_library_classes
+  def library_class_array
     scrape_library.collect do |t|
       if t.include?("Tai")
         t.gsub(";", "")
@@ -42,7 +42,7 @@ class FreeGroupExBham::Scraper
     end.compact
   end
 
-  def make_gardens_classes
+  def gardens_class_array
     scrape_gardens_url.collect do |u|
       doc = Nokogiri::HTML(open(u))
       c = doc.css("#event_details").children
@@ -50,13 +50,19 @@ class FreeGroupExBham::Scraper
     end[0..3]
   end
 
-  def combine_lists
-    make_rrpark_classes + make_library_classes + make_gardens_classes
-  end
+  # def combine_lists
+  #   make_rrpark_classes + make_library_classes + make_gardens_classes
+  # end
 
   def create_classes
-    combine_lists.each do |c|
-    FreeGroupExBham::Offerings.new(c)
+    gardens_class_array.each do |c|
+      FreeGroupExBham::Gardens.new(c)
+    end
+    library_class_array.each do |c|
+      FreeGroupExBham::Library.new(c)
+    end
+    rrpark_class_array.each do |c|
+      FreeGroupExBham::RRPark.new(c)
     end
   end
 

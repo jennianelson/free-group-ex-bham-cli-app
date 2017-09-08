@@ -1,10 +1,10 @@
-class FreeGroupExBham::Offerings
-  attr_accessor :klass
+class FreeGroupExBham::Classes
+  attr_accessor :name
 
   @@all = []
 
   def initialize(c)
-    @klass = c
+    @name = c
     @@all << self
   end
 
@@ -14,7 +14,7 @@ class FreeGroupExBham::Offerings
 
   def self.post_offerings
     @@all.each_with_index do |c, i|
-      puts "#{i+1}. #{c.klass}"
+      puts "#{i+1}. #{c.name}"
     end
   end
 
