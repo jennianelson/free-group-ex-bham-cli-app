@@ -21,8 +21,21 @@ class FreeGroupExBham::Scraper
     doc.css("h3").text.strip
   end
 
+  def scrape_gardens_one
+    # doc = Nokogiri::HTML(open("http://aldridgegardens.com/education/events/spring_event_calendar.html/event/2017/09/05/tai-chi-for-health/173019"))
+    # doc.css(".event_title h3").text
+
+    doc = Nokogiri::HTML(open("http://aldridgegardens.com/education/events/spring_event_calendar.html"))
+    doc.css("td.currentMonth").text.split("\n").collect do |t|
+      if t.include?("Yoga") || t.include?("Tai")
+        t.strip
+      end
+    end.compact.uniq
+
+  end
+
   def combine_lists
-    make_rrpark_array + [scrape_library_one] + [scrape_library_two]
+    make_rrpark_array + [scrape_library_one] + [scrape_library_two] + scrape_gardens_one
   end
 
   def create_classes
