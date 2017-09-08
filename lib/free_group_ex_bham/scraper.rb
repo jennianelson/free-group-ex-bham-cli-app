@@ -54,15 +54,21 @@ class FreeGroupExBham::Scraper
   #   make_rrpark_classes + make_library_classes + make_gardens_classes
   # end
 
-  def create_classes
-    gardens_class_array.each do |g|
-      FreeGroupExBham::Gardens.new(g)
+  def create_rrpark_classes
+    rrpark_class_array.each do |r|
+      FreeGroupExBham::RRPark.new(r)
     end
+  end
+
+  def create_library_classes
     library_class_array.each do |l|
       FreeGroupExBham::Library.new(l)
     end
-    rrpark_class_array.each do |r|
-      FreeGroupExBham::RRPark.new(r)
+  end
+
+  def create_gardens_classes
+    gardens_class_array.each do |g|
+      FreeGroupExBham::Gardens.new(g)
     end
   end
 
