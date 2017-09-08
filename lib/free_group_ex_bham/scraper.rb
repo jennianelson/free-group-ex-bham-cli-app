@@ -13,8 +13,16 @@ class FreeGroupExBham::Scraper
 
   def scrape_library_one
     binding.pry
-    doc = Nokogiri::HTML(open("https://vestavialibrary.org/events/monday-night-tai-chi-for-beginners-2-2017-08-28/"))
-    doc.css("h3").text.strip
+    doc = Nokogiri::HTML(open("https://vestavialibrary.org/events/categories/adults/"))
+    doc.css("div.entry-content ul li").collect do |c|
+      c.children.text
+      end.collect do |t|
+        if t.include?("Tai")
+          t.gsub(";", "")
+        end
+      end.compact[0..3]
+    # doc = Nokogiri::HTML(open("https://vestavialibrary.org/events/monday-night-tai-chi-for-beginners-2-2017-08-28/"))
+    # doc.css("h3").text.strip
   end
 
   def scrape_library_two
