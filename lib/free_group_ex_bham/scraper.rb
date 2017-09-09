@@ -1,4 +1,5 @@
 class FreeGroupExBham::Scraper
+  # attr_accessor :klass
 
   def scrape_rrpark
     doc = Nokogiri::HTML(open("http://www.railroadpark.org/calendar.php"))
@@ -50,26 +51,25 @@ class FreeGroupExBham::Scraper
     end[0..3]
   end
 
-  # def combine_lists
-  #   make_rrpark_classes + make_library_classes + make_gardens_classes
-  # end
-
   def create_rrpark_classes
     rrpark_class_array.each do |r|
-      FreeGroupExBham::RRPark.new(r)
+      @klass = FreeGroupExBham::RRPark.new(r)
     end
+    @klass.print_classes
   end
 
   def create_library_classes
     library_class_array.each do |l|
-      FreeGroupExBham::Library.new(l)
+      @klass = FreeGroupExBham::Library.new(l)
     end
+    @klass.print_classes
   end
 
   def create_gardens_classes
     gardens_class_array.each do |g|
-      FreeGroupExBham::Gardens.new(g)
+      @klass = FreeGroupExBham::Gardens.new(g)
     end
+    @klass.print_classes
   end
 
 end

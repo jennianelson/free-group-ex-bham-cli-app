@@ -1,10 +1,10 @@
 class FreeGroupExBham::RRPark
-  attr_accessor :name
+  attr_accessor :klass
 
   @@all = []
 
-  def initialize(c)
-    @name = c
+  def initialize(klass)
+    @klass = klass
     @@all << self
   end
 
@@ -12,10 +12,13 @@ class FreeGroupExBham::RRPark
     @@all
   end
 
-  def self.post_offerings
+  def print_classes
+
+    puts "\n--------------------------------------------"
     @@all.each_with_index do |c, i|
-      puts "#{i+1}. #{c.name}"
+      puts "#{i+1}. #{c.klass}"
     end
+    puts "----------------------------------------------"
   end
 
 
