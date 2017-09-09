@@ -13,8 +13,8 @@ class FreeGroupExBham::RRPark
   end
 
   def print_classes
-
-    puts "\n--------------------------------------------"
+    puts "\nClasses this week at Railroad Park:"
+    puts "--------------------------------------------"
     @@all.each_with_index do |c, i|
       puts "#{i+1}. #{c.klass}"
     end
