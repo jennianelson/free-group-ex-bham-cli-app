@@ -1,25 +1,24 @@
-# class FreeGroupExBham::Classes
-#   attr_accessor :klass
+class FreeGroupExBham::Classes
+  attr_accessor :klass
 #
-#   @@all = []
-#   
+#   # @@all = []
+#
 #   def initialize(c)
 #     @name = c
 #     # @@all << self
-#   end
-#
-#   def save
-#     @@all << self
 #   end
 #
 #   def self.all
 #     @@all
 #   end
 #
-#   def self.print_classes
-#     @@all.each_with_index do |c, i|
-#       puts "#{i+1}. #{c.klass}"
-#     end
-#   end
+  def print_classes
+    puts "\nClasses this week:"
+    puts "--------------------------------------------"
+    self.all.each_with_index do |c, i|
+      puts "#{i+1}. #{c.klass}"
+    end
+    puts "----------------------------------------------"
+  end
 #
-# end
+end

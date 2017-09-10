@@ -1,4 +1,4 @@
-class FreeGroupExBham::RRPark
+class FreeGroupExBham::RRPark < FreeGroupExBham::Classes
   attr_accessor :klass
 
   @@all = []

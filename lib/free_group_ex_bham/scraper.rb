@@ -4,10 +4,6 @@ class FreeGroupExBham::Scraper
   def scrape_rrpark
     doc = Nokogiri::HTML(open("http://www.railroadpark.org/calendar.php"))
     doc.css(".event-listing").children
-
-    # title = doc.css(".title").children[0..5].collect {|t| t.text}
-    # date = doc.css(".date").children[0..5].collect {|t| t.text}
-    # details = doc.css(".details").children[0..5].collect {|t| t.text}
   end
 
   def rrpark_class_array
@@ -48,7 +44,7 @@ class FreeGroupExBham::Scraper
       doc = Nokogiri::HTML(open(u))
       c = doc.css("#event_details").children
       "#{c.css('.event_title').text.strip}: #{c.css('.event_time em').text.strip}"
-    end[0..3]
+    end[0..5]
   end
 
   def create_rrpark_classes
