@@ -4,27 +4,34 @@ class FreeGroupExBham::RRPark
   @@all = []
 
   def initialize(hash)
-    binding.pry
     @klass = hash[:klass]
     @details = hash[:details]
     @@all << self
+  end
+
+  def class_array
+    # FreeGroupExBham::Scraper.new.create_rrpark_array
   end
 
   def self.all
     @@all
   end
 
-  def print_classes
-    puts "\nClasses this week at Railroad Park:"
-    puts "--------------------------------------------"
-    @@all.each_with_index do |c, i|
+  def self.print_classes
+    puts "\nUpcoming classes:"
+    puts "----------------------------------------------"
+    self.all.each_with_index do |c, i|
       puts "#{i+1}. #{c.klass}"
     end
     puts "----------------------------------------------"
   end
 
-  def print_details(input)
-    puts "\n"
+  def self.print_details(input)
+    k = self.all[input.to_i - 1]
+    puts "----------------------------------------------"
+    puts "#{k.klass}"
+    puts "\nDetails: #{k.details}"
+    puts "----------------------------------------------"
   end
 
 

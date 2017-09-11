@@ -13,7 +13,7 @@ class FreeGroupExBham::Gardens
   end
 
   def print_classes
-    puts "\nClasses this month at Aldridge Gardens:"
+    puts "\nUpcoming classes at Aldridge Gardens:"
     puts "----------------------------------------------"
     @@all.each_with_index do |c, i|
       puts "#{i+1}. #{c.klass}"

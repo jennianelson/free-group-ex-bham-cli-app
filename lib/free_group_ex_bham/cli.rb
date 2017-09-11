@@ -21,6 +21,8 @@ class FreeGroupExBham::CLI
       if input == "1"
         puts "\nFinding classes at Railroad Park..."
         FreeGroupExBham::Scraper.new.create_rrpark_classes
+        FreeGroupExBham::RRPark.print_classes
+        rrpark_details
       elsif input == "2"
         puts "\nFinding classes at Aldridge Gardens..."
         FreeGroupExBham::Scraper.new.create_gardens_classes
@@ -31,26 +33,44 @@ class FreeGroupExBham::CLI
         exit
       else
         puts "I'm sorry, I don't understand. Please type the number of a location on the list."
+        list_classes
       end
-      list_details
     end
 
-  def list_details# puts "Type the number of a class to see more details."
-    puts "Type the number of a class to see more details."
-    puts "Type 'locations' to go back to the list of locations."
-    puts "Type 'exit' to exit the program."
-    input = gets.strip
-
-    if input == "locations"
+  def list_details
+    puts "\nType the number of a class to see more details.  Type 'locations' to go back to the list of locations.  Type 'exit' to exit the program."
+    @second_input = gets.strip
+    if @second_input == "locations"
       list_locations
-    elsif input == "exit"
+    elsif @second_input == "exit"
       exit
-    elsif input.integer?
-
-    else
+    elsif !@second_input.to_i.integer?
       puts "I'm sorry, I don't understand."
       list_locations
     end
   end
+
+  def rrpark_details
+    list_details
+    if @second_input.to_i. <= FreeGroupExBham::RRPark.all.size
+      FreeGroupExBham::RRPark.print_details(@second_input)
+    end
+    puts "\nType 'list' to see the list of classes and options again. Type 'exit' to exit."
+    input = gets.strip
+    if input == "list"
+      FreeGroupExBham::RRPark.print_classes
+      rrpark_details
+    elsif input == 'exit'
+      exit
+    else
+      puts "I don't understand."
+      rrpark_details
+    end
+  end
+
+  # def last_level
+  #   puts "Type 'list' to see the list of classes again"
+  # end
+
 
 end
