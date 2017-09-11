@@ -1,9 +1,14 @@
 class FreeGroupExBham::CLI
 
+  def call
+    welcome
+    list_locations
+    list_classes
+  end
+
   def welcome
     puts "\nFREE Group Exercise Classes in Birmingham, Alabama!"
     sleep(1)
-    # puts "-----------------------------------------------------"
     puts "\nGroup exercise has many benefits over exercising on your own."
     sleep(2)
     puts "\nYou have a knowledgable instructor to keep you moving safely and effectively, and you have a group of people to keep you"
@@ -16,7 +21,6 @@ class FreeGroupExBham::CLI
     sleep(3)
     puts "these three locations in Birmingham offer FREE fitness classes:"
     sleep(2)
-    list_locations
   end
 
   def list_locations
@@ -24,7 +28,6 @@ class FreeGroupExBham::CLI
     puts "  2. Aldridge Gardens"
     puts "  3. Vestavia Hills Public Library\n"
     puts "Type the number of the location to see a list of upcoming classes. Type 'exit' to exit."
-    list_classes
   end
 
   def list_classes
