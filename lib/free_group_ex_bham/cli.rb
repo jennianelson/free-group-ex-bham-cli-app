@@ -1,23 +1,34 @@
 class FreeGroupExBham::CLI
 
   def welcome
-    puts "\nFree Group Exercise Classes in Birmingham, Alabama!"
-    puts "-----------------------------------------------------"
-    puts "Group exercise has many benefits over exercising on your own.  You have a knowledgable instructor to keep you moving safely and effectively, and you have a group of people to keep you motivated, encouraged, and supported."
-    puts "\nIf you aren't ready to commit to a gym membership or weekly classes, these three locations in Birmingham offer FREE fitness classes:"
+    puts "\nFREE Group Exercise Classes in Birmingham, Alabama!"
+    sleep(1)
+    # puts "-----------------------------------------------------"
+    puts "\nGroup exercise has many benefits over exercising on your own."
+    sleep(2)
+    puts "\nYou have a knowledgable instructor to keep you moving safely and effectively, and you have a group of people to keep you"
+    sleep(3)
+    puts "MOTIVATED"
+    sleep(1)
+    puts "and ENCOURAGED."
+    sleep (1)
+    puts "\nIf you aren't ready to commit to a gym membership or weekly classes, however..."
+    sleep(3)
+    puts "these three locations in Birmingham offer FREE fitness classes:"
+    sleep(2)
     list_locations
   end
 
   def list_locations
-    puts "1. Railroad Park"
-    puts "2. Aldridge Gardens"
-    puts "3. Vestavia Hills Public Library\n"
-    puts "Type the number of the location to see a list of the classes offered this week. Type 'exit' to exit."
+    puts "  1. Railroad Park"
+    puts "  2. Aldridge Gardens"
+    puts "  3. Vestavia Hills Public Library\n"
+    puts "Type the number of the location to see a list of upcoming classes. Type 'exit' to exit."
     list_classes
   end
 
   def list_classes
-      input = gets.strip
+      input = gets.strip.downcase
       if input == "1"
         puts "\nFinding classes at Railroad Park..."
         FreeGroupExBham::Scraper.new.create_rrpark_classes
@@ -38,39 +49,40 @@ class FreeGroupExBham::CLI
     end
 
   def list_details
-    puts "\nType the number of a class to see more details.  Type 'locations' to go back to the list of locations.  Type 'exit' to exit the program."
-    @second_input = gets.strip
-    if @second_input == "locations"
+    puts "Type the number of a class to see more details.  Type 'locations' to go back to the list of locations.  Type 'exit' to exit the program."
+    @details_input = gets.strip
+    if @details_input == "locations"
       list_locations
-    elsif @second_input == "exit"
+    elsif @details_input == "exit"
       exit
-    elsif !@second_input.to_i.integer?
+    elsif !@details_input.to_i.integer?
       puts "I'm sorry, I don't understand."
       list_locations
     end
   end
 
-  def rrpark_details
-    list_details
-    if @second_input.to_i. <= FreeGroupExBham::RRPark.all.size
-      FreeGroupExBham::RRPark.print_details(@second_input)
-    end
-    puts "\nType 'list' to see the list of classes and options again. Type 'exit' to exit."
-    input = gets.strip
-    if input == "list"
-      FreeGroupExBham::RRPark.print_classes
-      rrpark_details
-    elsif input == 'exit'
+  def final_menu
+    puts "Type 'list' to see the list of classes and options again. Type 'exit' to exit."
+    @last_input = gets.strip.downcase
+    if @last_input == 'exit'
       exit
-    else
+    elsif
       puts "I don't understand."
-      rrpark_details
+      final_menu
     end
   end
 
-  # def last_level
-  #   puts "Type 'list' to see the list of classes again"
-  # end
+  def rrpark_details
+    list_details
+    if @details_input.to_i. <= FreeGroupExBham::RRPark.all.size
+      FreeGroupExBham::RRPark.print_details(@details_input)
+    end
+    final_menu
+    if @last_input == "list"
+      FreeGroupExBham::RRPark.print_classes
+      rrpark_details
+    end
+  end
 
 
 end

@@ -9,16 +9,12 @@ class FreeGroupExBham::RRPark
     @@all << self
   end
 
-  def class_array
-    # FreeGroupExBham::Scraper.new.create_rrpark_array
-  end
-
   def self.all
     @@all
   end
 
   def self.print_classes
-    puts "\nUpcoming classes:"
+    puts "Upcoming classes:"
     puts "----------------------------------------------"
     self.all.each_with_index do |c, i|
       puts "#{i+1}. #{c.klass}"
@@ -28,9 +24,9 @@ class FreeGroupExBham::RRPark
 
   def self.print_details(input)
     k = self.all[input.to_i - 1]
-    puts "----------------------------------------------"
-    puts "#{k.klass}"
-    puts "\nDetails: #{k.details}"
+    # puts "----------------------------------------------"
+    puts "---Details about #{k.klass}---"
+    puts "\n#{k.details}"
     puts "----------------------------------------------"
   end
 
