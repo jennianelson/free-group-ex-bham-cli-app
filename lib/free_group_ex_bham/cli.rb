@@ -13,39 +13,40 @@ class FreeGroupExBham::CLI
     puts "2. Aldridge Gardens"
     puts "3. Vestavia Hills Public Library\n"
     puts "Type the number of the location to see a list of the classes offered this week. Type 'exit' to exit."
-    user_input
+    list_classes
   end
 
-  def user_input
+  def list_classes
       input = gets.strip
       if input == "1"
         puts "\nFinding classes at Railroad Park..."
         FreeGroupExBham::Scraper.new.create_rrpark_classes
-        # FreeGroupExBham::RRPark.print_classes
       elsif input == "2"
         puts "\nFinding classes at Aldridge Gardens..."
         FreeGroupExBham::Scraper.new.create_gardens_classes
-        # FreeGroupExBham::Gardens.print_classes
       elsif input == "3"
         puts "\nFinding classes at Vestavia Hills Library"
         FreeGroupExBham::Scraper.new.create_library_classes
-        # FreeGroupExBham::Library.print_classes
       elsif input == "exit"
         exit
       else
         puts "I'm sorry, I don't understand. Please type the number of a location on the list."
       end
-      level_two
+      list_details
     end
 
-  def level_two# puts "Type the number of a class to see more details."
-    puts "Type 'locations' to go back. Type 'exit' to exit the program."
-
+  def list_details# puts "Type the number of a class to see more details."
+    puts "Type the number of a class to see more details."
+    puts "Type 'locations' to go back to the list of locations."
+    puts "Type 'exit' to exit the program."
     input = gets.strip
+
     if input == "locations"
       list_locations
     elsif input == "exit"
       exit
+    elsif input.integer?
+
     else
       puts "I'm sorry, I don't understand."
       list_locations

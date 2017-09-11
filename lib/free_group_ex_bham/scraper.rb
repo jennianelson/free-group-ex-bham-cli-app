@@ -3,15 +3,18 @@ class FreeGroupExBham::Scraper
 
   def scrape_rrpark
     doc = Nokogiri::HTML(open("http://www.railroadpark.org/calendar.php"))
-    doc.css(".event-listing").children
+    doc.css(".event-listing").children[0..5]
   end
 
-  def rrpark_class_array
-    scrape_rrpark.collect do |e|
+  def create_rrpark_array
+    rrpark_array = []
+    scrape_rrpark.each do |e|
       if e.css(".details").text.include?("class")
-        "#{e.css('.title').text.strip}: #{e.css('.date').text.strip}"
+        rrpark_array << { :klass => "#{e.css('.title').text.strip}: #{e.css('.date').text.strip}",
+        :details => e.css('.details').text.strip }
       end
-    end.compact[0..5]
+    end
+    rrpark_array
   end
 
   def scrape_library
@@ -48,10 +51,10 @@ class FreeGroupExBham::Scraper
   end
 
   def create_rrpark_classes
-    rrpark_class_array.each do |r|
-      @klass = FreeGroupExBham::RRPark.new(r)
+    create_rrpark_array.each do |hash|
+      @rrpark = FreeGroupExBham::RRPark.new(hash)
     end
-    @klass.print_classes
+    @rrpark.print_classes
   end
 
   def create_library_classes

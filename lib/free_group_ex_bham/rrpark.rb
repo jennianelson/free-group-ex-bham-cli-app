@@ -1,10 +1,12 @@
-class FreeGroupExBham::RRPark < FreeGroupExBham::Classes
-  attr_accessor :klass
+class FreeGroupExBham::RRPark
+  attr_accessor :klass, :details
 
   @@all = []
 
-  def initialize(klass)
-    @klass = klass
+  def initialize(hash)
+    binding.pry
+    @klass = hash[:klass]
+    @details = hash[:details]
     @@all << self
   end
 
@@ -19,6 +21,10 @@ class FreeGroupExBham::RRPark < FreeGroupExBham::Classes
       puts "#{i+1}. #{c.klass}"
     end
     puts "----------------------------------------------"
+  end
+
+  def print_details(input)
+    puts "\n"
   end
 
 
