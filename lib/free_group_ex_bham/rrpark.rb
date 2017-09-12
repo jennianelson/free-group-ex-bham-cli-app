@@ -14,7 +14,7 @@ class FreeGroupExBham::RRPark
   end
 
   def self.print_classes
-    puts "Upcoming classes:"
+    puts "Upcoming classes at Railroad Park:"
     puts "----------------------------------------------"
     self.all.each_with_index do |c, i|
       puts "#{i+1}. #{c.klass}"
@@ -24,7 +24,7 @@ class FreeGroupExBham::RRPark
 
   def self.print_details(input)
     k = self.all[input.to_i - 1]
-    # puts "----------------------------------------------"
+    puts "----------------------------------------------"
     puts "---Details about #{k.klass}---"
     puts "\n#{k.details}"
     puts "----------------------------------------------"

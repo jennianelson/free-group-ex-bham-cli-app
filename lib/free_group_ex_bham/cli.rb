@@ -3,12 +3,12 @@ class FreeGroupExBham::CLI
   def call
     welcome
     list_locations
-    list_classes
+    # list_classes
   end
 
   def welcome
     puts "\nFREE Group Exercise Classes in Birmingham, Alabama!"
-    sleep(1)
+    FreeGroupExBham::Scraper.create_rrpark_classes
     puts "\nGroup exercise has many benefits over exercising on your own."
     sleep(2)
     puts "\nYou have a knowledgable instructor to keep you moving safely and effectively, and you have a group of people to keep you"
@@ -17,7 +17,7 @@ class FreeGroupExBham::CLI
     sleep(1)
     puts "and ENCOURAGED."
     sleep (1)
-    puts "\nIf you aren't ready to commit to a gym membership or weekly classes, however..."
+    puts "\nIf you aren't ready to commit to a gym membership or the price is too high,"
     sleep(3)
     puts "these three locations in Birmingham offer FREE fitness classes:"
     sleep(2)
@@ -28,13 +28,13 @@ class FreeGroupExBham::CLI
     puts "  2. Aldridge Gardens"
     puts "  3. Vestavia Hills Public Library\n"
     puts "Type the number of the location to see a list of upcoming classes. Type 'exit' to exit."
+    list_classes
   end
 
   def list_classes
       input = gets.strip.downcase
       if input == "1"
         puts "\nFinding classes at Railroad Park..."
-        FreeGroupExBham::Scraper.new.create_rrpark_classes
         FreeGroupExBham::RRPark.print_classes
         rrpark_details
       elsif input == "2"
@@ -67,9 +67,9 @@ class FreeGroupExBham::CLI
   def final_menu
     puts "Type 'list' to see the list of classes and options again. Type 'exit' to exit."
     @last_input = gets.strip.downcase
-    if @last_input == 'exit'
+    if @last_input == "exit"
       exit
-    elsif
+    elsif @last_input != "list"
       puts "I don't understand."
       final_menu
     end
