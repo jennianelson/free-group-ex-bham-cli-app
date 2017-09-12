@@ -1,12 +1,5 @@
 class FreeGroupExBham::CLI
 
-  def call
-    welcome
-    # list_locations
-    # find_classes
-    # list_classes
-  end
-
   def goodbye
     puts "Go forth and get fit!"
     exit
@@ -14,18 +7,8 @@ class FreeGroupExBham::CLI
 
   def welcome
     puts "\nFREE Group Exercise Classes in Birmingham, Alabama!"
-    # sleep(1)
-    # puts "\nGroup exercise has many benefits over exercising on your own."
-    # sleep(1)
-    # puts "\nYou have a knowledgable instructor to keep you moving safely and effectively, and you have a group of people to keep you"
-    # sleep(3)
-    # puts "MOTIVATED"
-    # sleep(1)
-    # puts "and ENCOURAGED."
-    # sleep (1)
-    # puts "\nIf you aren't ready to commit to a gym membership or the price is too high,"
-    # sleep(3)
-    puts "Did you know that these three locations in Birmingham offer FREE fitness classes?"
+    sleep(1)
+    puts "\nDid you know that these three locations in Birmingham offer FREE classes?"
     puts "  1. Railroad Park"
     puts "  2. Aldridge Gardens"
     puts "  3. Vestavia Hills Public Library\n"
@@ -58,11 +41,9 @@ class FreeGroupExBham::CLI
   def list_classes
       input = gets.strip.downcase
       if input == "1"
-        # puts "\nFinding classes at Railroad Park..."
         FreeGroupExBham::RRPark.print_classes
         rrpark_details
       elsif input == "2"
-        # puts "\nFinding classes at Aldridge Gardens..."
         FreeGroupExBham::Gardens.print_classes
         gardens_details
       elsif input == "3"
