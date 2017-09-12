@@ -22,7 +22,7 @@ class FreeGroupExBham::CLI
   end
 
   def find_classes
-    puts "Please wait just a moment while I find upcoming classes for you...(I will only have to do this once!)"
+    puts "Please wait just a moment while I find upcoming classes for you at each location...(I will only have to do this once!)"
     FreeGroupExBham::Scraper.new.create_rrpark_classes
     puts "one done!"
     FreeGroupExBham::Scraper.new.create_gardens_classes
