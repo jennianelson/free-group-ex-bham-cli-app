@@ -1,5 +1,5 @@
 class FreeGroupExBham::Gardens
-  attr_accessor :klass
+  attr_accessor :klass, :details
 
   @@all = []
 
