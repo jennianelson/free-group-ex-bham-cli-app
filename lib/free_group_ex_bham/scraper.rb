@@ -1,14 +1,13 @@
 class FreeGroupExBham::Scraper
-  # attr_accessor :klass
 
-  def self.scrape_rrpark
+  def scrape_rrpark
     doc = Nokogiri::HTML(open("http://www.railroadpark.org/calendar.php"))
     doc.css(".event-listing").children
   end
 
-  def self.create_rrpark_array
+  def create_rrpark_array
     rrpark_array = []
-    self.scrape_rrpark.each do |e|
+    scrape_rrpark.each do |e|
       if e.css(".details").text.include?("class")
         rrpark_array << { :klass => "#{e.css('.title').text.strip}: #{e.css('.date').text.strip}",
         :details => e.css('.details').text.strip }
@@ -17,22 +16,23 @@ class FreeGroupExBham::Scraper
     rrpark_array[0..5]
   end
 
-  def self.scrape_library
+  def scrape_library
     doc = Nokogiri::HTML(open("https://vestavialibrary.org/events/categories/adults/"))
     doc.css("div.entry-content ul li").collect do |c|
       c.children.text
     end
   end
 
-  def self.library_class_array
-    self.scrape_library.collect do |t|
+  def create_library_array
+    library_array = []
+    scrape_library.collect do |t|
       if t.include?("Tai")
         t.gsub(";", "")
       end
     end.compact[0..1]
   end
 
-  def self.scrape_gardens_url
+  def scrape_gardens_url
     doc = Nokogiri::HTML(open("http://aldridgegardens.com/education/events/spring_event_calendar.html"))
     doc.css("td.currentMonth a").collect do |a|
       url = a.attr('href')
@@ -42,33 +42,35 @@ class FreeGroupExBham::Scraper
     end.compact
   end
 
-  def self.gardens_class_array
-    self.scrape_gardens_url.collect do |u|
+  def create_gardens_array
+    gardens_array = []
+    scrape_gardens_url.each do |u|
       doc = Nokogiri::HTML(open(u))
       c = doc.css("#event_details").children
-      "#{c.css('.event_title').text.strip}: #{c.css('.event_time em').text.strip}"
-    end[0..5]
-  end
-
-  def self.create_rrpark_classes
-    self.create_rrpark_array.each do |hash|
-      @new_class = FreeGroupExBham::RRPark.new(hash)
+      gardens_array << {
+        :klass => "#{c.css('.event_title').text.strip}: #{c.css('.event_time em').text.strip}",
+        :details => c.css(".details_value").text.strip }
     end
-    # FreeGroupExBham::RRPark.print_classes
+    gardens_array[0..5]
   end
 
-  def self.create_library_classes
-    self.library_class_array.each do |l|
+  def create_rrpark_classes
+    create_rrpark_array.each do |hash|
+      FreeGroupExBham::RRPark.new(hash)
+    end
+  end
+
+  def create_library_classes
+    create_library_array.each do |l|
       @klass = FreeGroupExBham::Library.new(l)
     end
     @klass.print_classes
   end
 
-  def self.create_gardens_classes
-    self.gardens_class_array.each do |g|
-      @klass = FreeGroupExBham::Gardens.new(g)
+  def create_gardens_classes
+    create_gardens_array.each do |hash|
+      FreeGroupExBham::Gardens.new(hash)
     end
-    @klass.print_classes
   end
 
 end

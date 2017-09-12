@@ -8,9 +8,9 @@ class FreeGroupExBham::CLI
 
   def welcome
     puts "\nFREE Group Exercise Classes in Birmingham, Alabama!"
-    FreeGroupExBham::Scraper.create_rrpark_classes
+    FreeGroupExBham::Scraper.new.create_rrpark_classes
     puts "\nGroup exercise has many benefits over exercising on your own."
-    sleep(2)
+    FreeGroupExBham::Scraper.new.create_gardens_classes
     puts "\nYou have a knowledgable instructor to keep you moving safely and effectively, and you have a group of people to keep you"
     sleep(3)
     puts "MOTIVATED"
@@ -34,12 +34,12 @@ class FreeGroupExBham::CLI
   def list_classes
       input = gets.strip.downcase
       if input == "1"
-        puts "\nFinding classes at Railroad Park..."
+        # puts "\nFinding classes at Railroad Park..."
         FreeGroupExBham::RRPark.print_classes
         rrpark_details
       elsif input == "2"
-        puts "\nFinding classes at Aldridge Gardens..."
-        FreeGroupExBham::Scraper.new.create_gardens_classes
+        # puts "\nFinding classes at Aldridge Gardens..."
+        FreeGroupExBham::Gardens.print_classes
       elsif input == "3"
         puts "\nFinding classes at Vestavia Hills Library"
         FreeGroupExBham::Scraper.new.create_library_classes
