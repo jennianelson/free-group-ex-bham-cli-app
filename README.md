@@ -1,6 +1,6 @@
 # FreeGroupExBham
 
-This Ruby Gem provides a CLI that lists free group exercise classes in Birmingham, Alabama.
+This Ruby Gem provides a CLI that lists free group exercise classes and details from multiple locations in Birmingham, Alabama.
 
 ## Installation
 
