@@ -1,5 +1,6 @@
 class FreeGroupExBham::Scraper
 
+#RRPARK
   def scrape_rrpark
     doc = Nokogiri::HTML(open("http://www.railroadpark.org/calendar.php"))
     doc.css(".event-listing").children
@@ -7,31 +8,62 @@ class FreeGroupExBham::Scraper
 
   def create_rrpark_array
     rrpark_array = []
-    scrape_rrpark.each do |e|
-      if e.css(".details").text.include?("class")
-        rrpark_array << { :klass => "#{e.css('.title').text.strip}: #{e.css('.date').text.strip}",
-        :details => e.css('.details').text.strip }
+    scrape_rrpark.each do |c|
+      if c.css(".details").text.include?("class")
+        rrpark_array << { :klass => "#{c.css('.title').text.strip}: #{c.css('.date').text.strip}",
+        :details => c.css('.details').text.strip }
       end
     end
     rrpark_array[0..5]
   end
 
-  def scrape_library
-    doc = Nokogiri::HTML(open("https://vestavialibrary.org/events/categories/adults/"))
-    doc.css("div.entry-content ul li").collect do |c|
-      c.children.text
+  def create_rrpark_classes
+    create_rrpark_array.each do |hash|
+      FreeGroupExBham::RRPark.new(hash)
     end
   end
 
-  def create_library_array
-    library_array = []
-    scrape_library.collect do |t|
-      if t.include?("Tai")
-        t.gsub(";", "")
+#LIBRARY
+  def scrape_library_classes
+    doc = Nokogiri::HTML(open("https://vestavialibrary.org/events/categories/adults/"))
+    doc.css("div.entry-content ul li").collect do |c|
+      if c.css("a").attr('href').value.include?('tai')
+        "#{c.text.strip.gsub("  -", ",")}"
       end
-    end.compact[0..1]
+    end.compact[0..2]
   end
 
+  def scrape_library_url
+    doc = Nokogiri::HTML(open("https://vestavialibrary.org/events/categories/adults/"))
+    doc.css("div.entry-content ul li a").collect do |c|
+      url = c.attr('href')
+      if url.include?('tai')
+        url
+      end
+    end.compact
+  end
+
+  def get_library_details
+    scrape_library_url.collect do |url|
+      doc = Nokogiri::HTML(open(url))
+      doc.css("p").text.strip.split(/\b\./)[0]
+    end[0..2]
+  end
+
+  def create_library_array
+    a = Array[*scrape_library_classes.zip(get_library_details).flatten]
+    [ {:klass => a[0], :details => a[1]},
+      {:klass => a[2], :details => a[3]},
+      {:klass => a[4], :details => a[5]} ]
+  end
+
+  def create_library_classes
+    create_library_array.each do |hash|
+      FreeGroupExBham::Library.new(hash)
+    end
+  end
+
+#GARDENS
   def scrape_gardens_url
     doc = Nokogiri::HTML(open("http://aldridgegardens.com/education/events/spring_event_calendar.html"))
     doc.css("td.currentMonth a").collect do |a|
@@ -52,19 +84,6 @@ class FreeGroupExBham::Scraper
         :details => c.css(".details_value").text.strip }
     end
     gardens_array[0..5]
-  end
-
-  def create_rrpark_classes
-    create_rrpark_array.each do |hash|
-      FreeGroupExBham::RRPark.new(hash)
-    end
-  end
-
-  def create_library_classes
-    create_library_array.each do |l|
-      @klass = FreeGroupExBham::Library.new(l)
-    end
-    @klass.print_classes
   end
 
   def create_gardens_classes

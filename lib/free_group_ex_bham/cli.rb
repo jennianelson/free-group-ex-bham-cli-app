@@ -22,10 +22,13 @@ class FreeGroupExBham::CLI
   end
 
   def find_classes
-    puts "Please wait just a moment while I find upcoming classes for you..."
+    puts "Please wait just a moment while I find upcoming classes for you...(I will only have to do this once!)"
     FreeGroupExBham::Scraper.new.create_rrpark_classes
+    puts "one done!"
     FreeGroupExBham::Scraper.new.create_gardens_classes
-    # FreeGroupExBham::Scraper.new.create_library_classes
+    puts "two done!"
+    FreeGroupExBham::Scraper.new.create_library_classes
+    puts "finished!"
     puts "Type the number of the location to see a list of upcoming classes. Type 'exit' to exit."
     list_classes
   end
@@ -47,8 +50,8 @@ class FreeGroupExBham::CLI
         FreeGroupExBham::Gardens.print_classes
         gardens_details
       elsif input == "3"
-        puts "\nFinding classes at Vestavia Hills Library"
-
+        FreeGroupExBham::Library.print_classes
+        library_details
       elsif input == "exit"
         goodbye
       else
@@ -77,7 +80,7 @@ class FreeGroupExBham::CLI
       goodbye
     elsif @last_input == "locations"
       list_locations
-    elsif @last_input != "list" || @last_input != "locations"
+    elsif @last_input != "list" && @last_input != "locations"
       puts "I don't understand."
       final_menu
     end
@@ -104,6 +107,18 @@ class FreeGroupExBham::CLI
     if @last_input == "list"
       FreeGroupExBham::Gardens.print_classes
       gardens_details
+    end
+  end
+
+  def library_details
+    list_details
+    if @details_input.to_i. <= FreeGroupExBham::Library.all.size
+      FreeGroupExBham::Library.print_details(@details_input)
+    end
+    final_menu
+    if @last_input == "list"
+      FreeGroupExBham::Library.print_classes
+      library_details
     end
   end
 
