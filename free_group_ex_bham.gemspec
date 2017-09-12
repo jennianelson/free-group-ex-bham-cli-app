@@ -13,15 +13,15 @@ Gem::Specification.new do |spec|
   spec.description   = "Provides a list and details about upcoming free exercise classes in the Birmingham area."
   spec.homepage      = "TODO: Put your gem's website or public repo URL here."
   spec.license       = "MIT"
-  spec.files         = ["lib/free_group_ex_bham/cli.rb", "lib/free_group_ex_bham/library.rb", "lib/free_group_ex_bham/gardens.rb",        "lib/free_group_ex_bham/rrpark.rb", "lib/free_group_ex_bham/scraper.rb" "config/environment.rb"]
+  spec.files         = ["lib/free_group_ex_bham/cli.rb", "lib/free_group_ex_bham/library.rb", "lib/free_group_ex_bham/gardens.rb",        "lib/free_group_ex_bham/rrpark.rb", "lib/free_group_ex_bham/scraper.rb", "config/environment.rb"]
   spec.executables << 'free-group-ex-bham'
 
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths = ["lib"]
+  # spec.bindir        = "exe"
+  # spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  # spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.14"
   spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "nokogiri", ">= 0"
-  spec.add_development_dependency "pry", ">= 0"
+  spec.add_development_dependency "nokogiri"
+  spec.add_development_dependency "pry"
 end
