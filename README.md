@@ -4,18 +4,6 @@ This Ruby Gem provides a CLI that lists free group exercise classes and details 
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'free_group_ex_bham'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
     $ gem install free_group_ex_bham
 
 ## Usage

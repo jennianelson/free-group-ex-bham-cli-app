@@ -24,6 +24,7 @@ class FreeGroupExBham::Scraper
   end
 
 #LIBRARY
+
   def scrape_library_classes
     doc = Nokogiri::HTML(open("https://vestavialibrary.org/events/categories/adults/"))
     doc.css("div.entry-content ul li").collect do |c|
@@ -75,15 +76,13 @@ class FreeGroupExBham::Scraper
   end
 
   def create_gardens_array
-    gardens_array = []
-    scrape_gardens_url.each do |u|
+    scrape_gardens_url.collect do |u|
       doc = Nokogiri::HTML(open(u))
       c = doc.css("#event_details").children
-      gardens_array << {
+      {
         :klass => "#{c.css('.event_title').text.strip}: #{c.css('.event_time em').text.strip}",
         :details => c.css(".details_value").text.strip }
-    end
-    gardens_array[0..5]
+    end[0..5]
   end
 
   def create_gardens_classes
