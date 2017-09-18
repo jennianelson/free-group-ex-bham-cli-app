@@ -25,41 +25,43 @@ class FreeGroupExBham::Scraper
 
 #LIBRARY
 
-  def scrape_library_classes
+  def scrape_library
     doc = Nokogiri::HTML(open("https://vestavialibrary.org/events/categories/adults/"))
     doc.css("div.entry-content ul li").collect do |c|
-      if c.css("a").attr('href').value.include?('tai')
-        "#{c.text.strip.gsub("  -", ",")}"
+      url = c.css("a").attr('href').value
+      if url.include?('tai')
+        {:klass => c.text.strip.gsub("  -", ","),
+        :details => Nokogiri::HTML(open(url)).css("p").text.strip.split(/\b\./)[0]}
       end
     end.compact[0..2]
   end
 
-  def scrape_library_url
-    doc = Nokogiri::HTML(open("https://vestavialibrary.org/events/categories/adults/"))
-    doc.css("div.entry-content ul li a").collect do |c|
-      url = c.attr('href')
-      if url.include?('tai')
-        url
-      end
-    end.compact
-  end
+  # def scrape_library_url
+  #   doc = Nokogiri::HTML(open("https://vestavialibrary.org/events/categories/adults/"))
+  #   doc.css("div.entry-content ul li a").collect do |c|
+  #     url = c.attr('href')
+  #     if url.include?('tai')
+  #       url
+  #     end
+  #   end.compact
+  # end
 
-  def get_library_details
-    scrape_library_url.collect do |url|
-      doc = Nokogiri::HTML(open(url))
-      doc.css("p").text.strip.split(/\b\./)[0]
-    end[0..2]
-  end
+  # def get_library_details
+  #   scrape_library_url.collect do |url|
+  #     doc = Nokogiri::HTML(open(url))
+  #     doc.css("p").text.strip.split(/\b\./)[0]
+  #   end[0..2]
+  # end
 
-  def create_library_array
-    a = Array[*scrape_library_classes.zip(get_library_details).flatten]
-    [ {:klass => a[0], :details => a[1]},
-      {:klass => a[2], :details => a[3]},
-      {:klass => a[4], :details => a[5]} ]
-  end
+  # def create_library_array
+  #   a = Array[*scrape_library_classes.zip(get_library_details).flatten]
+  #   [ {:klass => a[0], :details => a[1]},
+  #     {:klass => a[2], :details => a[3]},
+  #     {:klass => a[4], :details => a[5]} ]
+  # end
 
   def create_library_classes
-    create_library_array.each do |hash|
+    scrape_library.each do |hash|
       FreeGroupExBham::Library.new(hash)
     end
   end
