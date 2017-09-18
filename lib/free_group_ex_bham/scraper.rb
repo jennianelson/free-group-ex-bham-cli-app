@@ -36,28 +36,21 @@ class FreeGroupExBham::Scraper
   end
 
 #GARDENS
-  def scrape_gardens_url
+  def scrape_gardens
     doc = Nokogiri::HTML(open("http://aldridgegardens.com/education/events/spring_event_calendar.html"))
     doc.css("td.currentMonth a").collect do |a|
       url = a.attr('href')
       if url.include?("tai") || url.include?("yoga")
-        url
+        d = Nokogiri::HTML(open(url))
+        {
+              :klass => "#{d.css('.event_title').text.strip}: #{d.css('.event_time em').text.strip}",
+              :details => d.css(".details_value").text.strip }
       end
-    end.compact
-  end
-
-  def create_gardens_array
-    scrape_gardens_url.collect do |u|
-      doc = Nokogiri::HTML(open(u))
-      c = doc.css("#event_details").children
-      {
-        :klass => "#{c.css('.event_title').text.strip}: #{c.css('.event_time em').text.strip}",
-        :details => c.css(".details_value").text.strip }
-    end[0..5]
+    end.compact[0..5]
   end
 
   def create_gardens_classes
-    create_gardens_array.each do |hash|
+    scrape_gardens.each do |hash|
       FreeGroupExBham::Gardens.new(hash)
     end
   end
